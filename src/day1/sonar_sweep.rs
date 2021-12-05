@@ -3,14 +3,21 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 fn main() {
+    println!("Increased measurements: {}", solve());
+}
+
+pub fn solve() -> i32 {
     // File hosts must exist in current path before this produces output
-    if let Ok(reader) = read_lines("./input.txt") {
+    if let Ok(reader) = read_lines("./src/day1/input.txt") {
         let lines_v: Vec<_> = reader.collect::<Result<_, _>>().unwrap();
-        second(lines_v);
+        return second(lines_v);
+    } else {
+        println!("Couldn't read input file");
+        return 0;
     }
 }
 
-fn second(lines: Vec<String>) {
+fn second(lines: Vec<String>) -> i32 {
     let mut increased_measurement = 0;
     for n in 2..lines.len()-1 {
         let a1 = lines[n-2].parse::<i32>().unwrap();
@@ -23,7 +30,7 @@ fn second(lines: Vec<String>) {
             increased_measurement += 1;
         }
     }
-    println!("Increased measurements: {}", increased_measurement);
+    return increased_measurement;
 }
 fn first(lines: io::Lines<io::BufReader<File>>) {
     // Consumes the iterator, returns an (Optional) String
